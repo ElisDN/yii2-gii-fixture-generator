@@ -1,0 +1,32 @@
+{
+	"name": "elisdn/yii2-gii-fixture-generator",
+	"description": "Fixture class generator for Gii module of Yii2 Framework.",
+	"type": "yii2-extension",
+	"keywords": ["yii2", "yii 2", "gii", "fixture"],
+	"license": "BSD-3-Clause",
+	"authors": [
+		{
+			"name": "Dmitriy Yeliseyev",
+			"email": "mail@elisdn.ru",
+			"homepage": "http://www.elisdn.ru"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/ElisDN/yii2-gii-fixture-generator/issues?state=open",
+		"source": "https://github.com/ElisDN/yii2-gii-fixture-generator"
+	},
+	"require": {
+        "yiisoft/yii2-gii": "~2.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"elisdn\\gii\\fixture\\": "src/"
+		}
+	},
+	"extra": {
+		"asset-installer-paths": {
+			"npm-asset-library": "vendor/npm",
+			"bower-asset-library": "vendor/bower"
+		}
+	}
+}
