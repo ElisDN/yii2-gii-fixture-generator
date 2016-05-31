@@ -2,6 +2,8 @@
 
 The extension allows to generate fixture class on base of existing `ActiveRecord` model class. Also it allows to grab existing records from database into fixture data file.
 
+![Fixture Generator](screenshot.png)
+
 ## Installation
 
 Install with composer:
