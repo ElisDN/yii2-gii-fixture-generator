@@ -119,7 +119,7 @@ class Generator extends \yii\gii\Generator
      */
     public function successMessage()
     {
-        return '<p>The fixture class has been generated successfully.</p>';
+        return '<p>The fixture has been generated successfully.</p>';
     }
 
     public function validatePath($attribute)
