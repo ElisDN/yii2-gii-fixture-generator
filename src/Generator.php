@@ -160,7 +160,7 @@ class Generator extends \yii\gii\Generator
                     } elseif (preg_match('/^(0|[1-9-]\d*)$/s', $value)) {
                         $encValue = $value;
                     } else {
-                        $encValue = '\'' . addslashes($value) . '\'';
+                        $encValue = var_export($value, true);;
                     }
                     $item[$name] = $encValue;
                 }
