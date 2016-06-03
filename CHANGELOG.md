@@ -2,6 +2,11 @@
 
 Changes for `yii2-gii-fixture-generator`:
 
+## 1.1.0
+
+- Renamed `fixtureDataPath` attribute to `dataPath`
+- Added `fixtureClass` and `dataFile` attributes
+
 ## 1.0.1
 
 - Fixed success message
