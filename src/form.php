@@ -13,5 +13,5 @@
 
 echo $form->field($generator, 'modelClass');
 echo $form->field($generator, 'fixtureNs');
-echo $form->field($generator, 'fixtureDataPath');
+echo $form->field($generator, 'dataPath');
 echo $form->field($generator, 'grabData')->checkbox();

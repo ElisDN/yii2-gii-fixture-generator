@@ -20,5 +20,5 @@ use yii\test\ActiveFixture;
 class <?= $generator->getFixtureClassName() ?> extends ActiveFixture
 {
     public $modelClass = '<?= $generator->modelClass ?>';
-    public $dataFile = '<?= $generator->fixtureDataPath . '/' . $generator->getDataFileName() ?>.php';
+    public $dataFile = '<?= $generator->dataPath . '/' . $generator->getDataFileName() ?>';
 }

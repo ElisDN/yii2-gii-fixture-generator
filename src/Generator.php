@@ -17,7 +17,7 @@ class Generator extends \yii\gii\Generator
 {
     public $modelClass;
     public $fixtureNs = 'tests\codeception\fixtures';
-    public $fixtureDataPath = '@tests/codeception/fixtures/data';
+    public $dataPath = '@tests/codeception/fixtures/data';
     public $grabData = false;
 
     /**
@@ -48,7 +48,7 @@ class Generator extends \yii\gii\Generator
         );
 
         $files[] = new CodeFile(
-            Yii::getAlias($this->fixtureDataPath) . '/' . $this->getDataFileName() . '.php',
+            Yii::getAlias($this->dataPath) . '/' . $this->getDataFileName() . '.php',
             $this->render('data.php', ['items' => $this->getFixtureData()])
         );
 
@@ -66,8 +66,8 @@ class Generator extends \yii\gii\Generator
             [['modelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
             [['fixtureNs'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
             [['modelClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
-            [['fixtureDataPath'], 'match', 'pattern' => '/^@?\w+[\\-\\/\w]*$/', 'message' => 'Only word characters, dashes, slashes and @ are allowed.'],
-            [['fixtureDataPath'], 'validatePath'],
+            [['dataPath'], 'match', 'pattern' => '/^@?\w+[\\-\\/\w]*$/', 'message' => 'Only word characters, dashes, slashes and @ are allowed.'],
+            [['dataPath'], 'validatePath'],
             [['grabData'], 'boolean'],
         ]);
     }
@@ -80,7 +80,7 @@ class Generator extends \yii\gii\Generator
         return array_merge(parent::attributeLabels(), [
             'modelClass' => 'Model Class',
             'fixtureNs' => 'Fixture Class Namespace',
-            'fixtureDataPath' => 'Fixture Data Path',
+            'dataPath' => 'Fixture Data Path',
             'grabData' => 'Grab Existing DB Data',
         ]);
     }
@@ -98,7 +98,7 @@ class Generator extends \yii\gii\Generator
      */
     public function stickyAttributes()
     {
-        return array_merge(parent::stickyAttributes(), ['fixtureNs', 'fixtureDataPath']);
+        return array_merge(parent::stickyAttributes(), ['fixtureNs', 'dataPath']);
     }
 
     /**
@@ -109,7 +109,7 @@ class Generator extends \yii\gii\Generator
         return array_merge(parent::hints(), [
             'modelClass' => 'This is the model class. You should provide a fully qualified class name, e.g., <code>app\models\Post</code>.',
             'fixtureNs' => 'This is the namespace for fixture class file, e.g., <code>tests\codeception\fixtures</code>.',
-            'fixtureDataPath' => 'This is the root path to keep the generated fixture data files. You may provide either a directory or a path alias, e.g., <code>@tests/codeception/fixtures/data</code>.',
+            'dataPath' => 'This is the root path to keep the generated fixture data files. You may provide either a directory or a path alias, e.g., <code>@tests/codeception/fixtures/data</code>.',
             'grabData' => 'If checked, the existed data from database will be grabbed into data file.',
         ]);
     }

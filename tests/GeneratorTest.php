@@ -15,11 +15,11 @@ class GeneratorTest extends TestCase
         $generator = new FixtureGenerator();
         $generator->modelClass = 'tests\Fake';
         $generator->fixtureNs = 'tests\runtime';
-        $generator->fixtureDataPath = '@tests/runtime/fake';
+        $generator->dataPath = '@tests/runtime/fake';
         $generator->grabData = true;
 
         $this->assertFalse($generator->validate());
-        $this->assertEquals($generator->getFirstError('fixtureDataPath'), 'Path does not exist.');
+        $this->assertEquals($generator->getFirstError('dataPath'), 'Path does not exist.');
         $this->assertEquals($generator->getFirstError('modelClass'), 'Class \'tests\\Fake\' does not exist or has syntax error.');
     }
 
@@ -28,7 +28,7 @@ class GeneratorTest extends TestCase
         $generator = new FixtureGenerator();
         $generator->modelClass = 'elisdn\gii\fixture\tests\Post';
         $generator->fixtureNs = 'tests\runtime';
-        $generator->fixtureDataPath = '@tests/runtime/data';
+        $generator->dataPath = '@tests/runtime/data';
         $generator->grabData = true;
 
         $this->assertTrue($generator->validate(), 'Validation failed: ' . print_r($generator->getErrors(), true));
@@ -41,7 +41,7 @@ class GeneratorTest extends TestCase
         $generator = new FixtureGenerator();
         $generator->modelClass = 'elisdn\gii\fixture\tests\Post';
         $generator->fixtureNs = 'tests\runtime';
-        $generator->fixtureDataPath = '@tests/runtime/data';
+        $generator->dataPath = '@tests/runtime/data';
         $generator->grabData = false;
 
         /** @var CodeFile[] $files */
@@ -63,7 +63,7 @@ class GeneratorTest extends TestCase
         $generator = new FixtureGenerator();
         $generator->modelClass = 'elisdn\gii\fixture\tests\Post';
         $generator->fixtureNs = 'tests\runtime';
-        $generator->fixtureDataPath = '@tests/runtime/data';
+        $generator->dataPath = '@tests/runtime/data';
         $generator->grabData = true;
 
         /** @var CodeFile[] $files */
