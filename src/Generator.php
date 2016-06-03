@@ -16,7 +16,9 @@ use yii\gii\CodeFile;
 class Generator extends \yii\gii\Generator
 {
     public $modelClass;
+    public $fixtureClass;
     public $fixtureNs = 'tests\codeception\fixtures';
+    public $dataFile;
     public $dataPath = '@tests/codeception/fixtures/data';
     public $grabData = false;
 
@@ -48,7 +50,7 @@ class Generator extends \yii\gii\Generator
         );
 
         $files[] = new CodeFile(
-            Yii::getAlias($this->dataPath) . '/' . $this->getDataFileName() . '.php',
+            Yii::getAlias($this->dataPath) . '/' . $this->getDataFileName(),
             $this->render('data.php', ['items' => $this->getFixtureData()])
         );
 
@@ -61,10 +63,11 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['modelClass', 'fixtureNs', 'fixtureDataPath'], 'filter', 'filter' => 'trim'],
-            [['modelClass', 'fixtureNs', 'fixtureDataPath'], 'required'],
-            [['modelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
-            [['fixtureNs'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
+            [['modelClass', 'fixtureClass', 'fixtureNs', 'dataPath'], 'filter', 'filter' => 'trim'],
+            [['modelClass', 'fixtureNs', 'dataPath'], 'required'],
+            [['modelClass', 'fixtureNs'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
+            [['fixtureClass'], 'match', 'pattern' => '/^\w+$/', 'message' => 'Only word characters are allowed.'],
+            [['dataFile'], 'match', 'pattern' => '/^\w+\.php$/', 'message' => 'Only php files are allowed.'],
             [['modelClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
             [['dataPath'], 'match', 'pattern' => '/^@?\w+[\\-\\/\w]*$/', 'message' => 'Only word characters, dashes, slashes and @ are allowed.'],
             [['dataPath'], 'validatePath'],
@@ -79,7 +82,9 @@ class Generator extends \yii\gii\Generator
     {
         return array_merge(parent::attributeLabels(), [
             'modelClass' => 'Model Class',
+            'fixtureClass' => 'Fixture Class Name',
             'fixtureNs' => 'Fixture Class Namespace',
+            'dataFile' => 'Fixture Data File',
             'dataPath' => 'Fixture Data Path',
             'grabData' => 'Grab Existing DB Data',
         ]);
@@ -108,7 +113,9 @@ class Generator extends \yii\gii\Generator
     {
         return array_merge(parent::hints(), [
             'modelClass' => 'This is the model class. You should provide a fully qualified class name, e.g., <code>app\models\Post</code>.',
+            'fixtureClass' => 'This is the name for fixture class, e.g., <code>PostFixture</code>.',
             'fixtureNs' => 'This is the namespace for fixture class file, e.g., <code>tests\codeception\fixtures</code>.',
+            'dataFile' => 'This is the name for the generated fixture data file, e.g., <code>post.php</code>.',
             'dataPath' => 'This is the root path to keep the generated fixture data files. You may provide either a directory or a path alias, e.g., <code>@tests/codeception/fixtures/data</code>.',
             'grabData' => 'If checked, the existed data from database will be grabbed into data file.',
         ]);
@@ -132,14 +139,20 @@ class Generator extends \yii\gii\Generator
 
     public function getDataFileName()
     {
-        /** @var \yii\db\ActiveRecord $modelClass */
-        $modelClass = $this->modelClass;
-        return preg_replace('/[{}%]+/', '', $modelClass::tableName());
+        if (!empty($this->dataFile)) {
+            return $this->dataFile;
+        } else {
+            return strtolower(pathinfo(str_replace('\\', '/', $this->modelClass), PATHINFO_BASENAME)) . '.php';
+        }
     }
 
     public function getFixtureClassName()
     {
-        return pathinfo(str_replace('\\', '/', $this->modelClass), PATHINFO_BASENAME) . 'Fixture';
+        if (!empty($this->fixtureClass)) {
+            return $this->fixtureClass;
+        } else {
+            return pathinfo(str_replace('\\', '/', $this->modelClass), PATHINFO_BASENAME) . 'Fixture';
+        }
     }
 
     /**

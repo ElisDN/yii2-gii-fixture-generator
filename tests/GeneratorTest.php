@@ -34,6 +34,32 @@ class GeneratorTest extends TestCase
         $this->assertTrue($generator->validate(), 'Validation failed: ' . print_r($generator->getErrors(), true));
     }
 
+    public function testDefaultNames()
+    {
+        $generator = new FixtureGenerator();
+        $generator->modelClass = 'elisdn\gii\fixture\tests\Post';
+        $generator->fixtureNs = 'tests\runtime';
+        $generator->dataPath = '@tests/runtime/data';
+        $generator->grabData = false;
+
+        $this->assertEquals('PostFixture', $generator->getFixtureClassName());
+        $this->assertEquals('post.php', $generator->getDataFileName());
+    }
+
+    public function testSpecificNames()
+    {
+        $generator = new FixtureGenerator();
+        $generator->modelClass = 'elisdn\gii\fixture\tests\Post';
+        $generator->fixtureClass = 'PostCustomFixture';
+        $generator->fixtureNs = 'tests\runtime';
+        $generator->dataFile = 'post-custom.php';
+        $generator->dataPath = '@tests/runtime/data';
+        $generator->grabData = false;
+
+        $this->assertEquals('PostCustomFixture', $generator->getFixtureClassName());
+        $this->assertEquals('post-custom.php', $generator->getDataFileName());
+    }
+
     public function testGenerateWithoutData()
     {
         $this->initDb();
