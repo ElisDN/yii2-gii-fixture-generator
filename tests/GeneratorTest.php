@@ -75,9 +75,6 @@ class GeneratorTest extends TestCase
 
         $this->assertEquals(2, count($files));
 
-        $this->assertEquals('runtime/PostFixture.php', $files[0]->relativePath);
-        $this->assertEquals('runtime/data/post.php', $files[1]->relativePath);
-
         $this->assertEquals(file_get_contents(__DIR__ . '/expected/class.php'), $files[0]->content);
         $this->assertEquals(file_get_contents(__DIR__ . '/expected/data-empty.php'), $files[1]->content);
     }
@@ -96,9 +93,6 @@ class GeneratorTest extends TestCase
         $files = $generator->generate();
 
         $this->assertEquals(2, count($files));
-
-        $this->assertEquals('runtime/PostFixture.php', $files[0]->relativePath);
-        $this->assertEquals('runtime/data/post.php', $files[1]->relativePath);
 
         $this->assertEquals(file_get_contents(__DIR__ . '/expected/class.php'), $files[0]->content);
         $this->assertEquals(file_get_contents(__DIR__ . '/expected/data-full.php'), $files[1]->content);
