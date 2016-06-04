@@ -126,7 +126,28 @@ class Generator extends \yii\gii\Generator
      */
     public function successMessage()
     {
-        return '<p>The fixture has been generated successfully.</p>';
+        $output = <<<EOD
+<p>The fixture has been generated successfully.</p>
+<p>To access the data, you need to add this to your test class:</p>
+EOD;
+        $id = $this->getFixtureId();
+        $class = $this->fixtureNs . '\\' . $this->getFixtureClassName();
+        $file = $this->dataPath . '/' . $this->getDataFileName();
+        $code = <<<EOD
+<?php
+
+public function fixtures()
+{
+    return [
+        '{$id}' => [
+            'class' => \\{$class}::className(),
+            'dataFile' => '{$file}',
+        ],
+    ];
+}
+EOD;
+
+        return $output . '<pre>' . highlight_string($code, true) . '</pre>';
     }
 
     public function validatePath($attribute)
@@ -153,6 +174,11 @@ class Generator extends \yii\gii\Generator
         } else {
             return pathinfo(str_replace('\\', '/', $this->modelClass), PATHINFO_BASENAME) . 'Fixture';
         }
+    }
+
+    public function getFixtureId()
+    {
+        return strtolower(pathinfo(str_replace('\\', '/', $this->modelClass), PATHINFO_BASENAME));
     }
 
     /**

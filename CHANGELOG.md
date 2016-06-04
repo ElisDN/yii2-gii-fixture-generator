@@ -2,6 +2,10 @@
 
 Changes for `yii2-gii-fixture-generator`:
 
+## 1.1.2
+
+- Improved success message
+
 ## 1.1.1
 
 - Small fixes
