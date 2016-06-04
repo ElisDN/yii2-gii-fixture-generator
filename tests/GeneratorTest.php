@@ -108,7 +108,7 @@ class GeneratorTest extends TestCase
     {
         @unlink(__DIR__ . '/runtime/sqlite.db');
         $db = new Connection([
-            'dsn' => 'sqlite:' . __DIR__ . '/runtime/sqlite.db',
+            'dsn' => 'sqlite:' . Yii::$app->getRuntimePath() . '/sqlite.db',
             'charset' => 'utf8',
         ]);
         Yii::$app->set('db', $db);
