@@ -2,6 +2,10 @@
 
 Changes for `yii2-gii-fixture-generator`:
 
+## 1.1.3
+
+- Refactored tests
+
 ## 1.1.2
 
 - Improved success message
