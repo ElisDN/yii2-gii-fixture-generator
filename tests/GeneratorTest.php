@@ -71,12 +71,9 @@ class GeneratorTest extends TestCase
         $generator->grabData = false;
 
         /** @var CodeFile[] $files */
-        $files = $generator->generate();
-
-        $this->assertEquals(2, count($files));
-
-        $this->assertEquals(file_get_contents(__DIR__ . '/expected/class.php'), $files[0]->content);
-        $this->assertEquals(file_get_contents(__DIR__ . '/expected/data-empty.php'), $files[1]->content);
+        $this->assertCount(2, $files = $generator->generate());
+        $this->assertStringEqualsFile(__DIR__ . '/expected/class.php', $files[0]->content);
+        $this->assertStringEqualsFile(__DIR__ . '/expected/data-empty.php', $files[1]->content);
     }
 
     public function testGenerateWithData()
@@ -90,12 +87,9 @@ class GeneratorTest extends TestCase
         $generator->grabData = true;
 
         /** @var CodeFile[] $files */
-        $files = $generator->generate();
-
-        $this->assertEquals(2, count($files));
-
-        $this->assertEquals(file_get_contents(__DIR__ . '/expected/class.php'), $files[0]->content);
-        $this->assertEquals(file_get_contents(__DIR__ . '/expected/data-full.php'), $files[1]->content);
+        $this->assertCount(2, $files = $generator->generate());
+        $this->assertStringEqualsFile(__DIR__ . '/expected/class.php', $files[0]->content);
+        $this->assertStringEqualsFile(__DIR__ . '/expected/data-full.php', $files[1]->content);
     }
 
     private function initDb()
