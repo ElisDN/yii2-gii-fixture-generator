@@ -11,7 +11,12 @@
             var dataFileInput = $('#generator-datafile');
             var dataFile = dataFileInput.val();
             if (dataFile === '') {
-                dataFile = modelClass.split('\\').slice(-1)[0].toLowerCase() + '.php';
+                dataFile = modelClass
+                    .split('\\')
+                    .slice(-1)[0]
+                    .replace(/\.?([A-Z])/g, function (x, y) { return '_' + y.toLowerCase()} )
+                    .replace(/^_/, '')
+                    + '.php';
                 dataFileInput.val(dataFile);
             }
         }
