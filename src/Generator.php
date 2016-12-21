@@ -17,9 +17,9 @@ class Generator extends \yii\gii\Generator
 {
     public $modelClass;
     public $fixtureClass;
-    public $fixtureNs = 'tests\codeception\fixtures';
+    public $fixtureNs = 'tests\fixtures';
     public $dataFile;
-    public $dataPath = '@tests/codeception/fixtures/data';
+    public $dataPath = '@tests/fixtures/data';
     public $grabData = false;
 
     /**
@@ -114,9 +114,9 @@ class Generator extends \yii\gii\Generator
         return array_merge(parent::hints(), [
             'modelClass' => 'This is the model class. You should provide a fully qualified class name, e.g., <code>app\models\Post</code>.',
             'fixtureClass' => 'This is the name for fixture class, e.g., <code>PostFixture</code>.',
-            'fixtureNs' => 'This is the namespace for fixture class file, e.g., <code>tests\codeception\fixtures</code>.',
+            'fixtureNs' => 'This is the namespace for fixture class file, e.g., <code>tests\fixtures</code>.',
             'dataFile' => 'This is the name for the generated fixture data file, e.g., <code>post.php</code>.',
-            'dataPath' => 'This is the root path to keep the generated fixture data files. You may provide either a directory or a path alias, e.g., <code>@tests/codeception/fixtures/data</code>.',
+            'dataPath' => 'This is the root path to keep the generated fixture data files. You may provide either a directory or a path alias, e.g., <code>@tests/fixtures/data</code>.',
             'grabData' => 'If checked, the existed data from database will be grabbed into data file.',
         ]);
     }
