@@ -2,6 +2,11 @@
 
 Changes for `yii2-gii-fixture-generator`:
 
+## 1.1.4
+
+- Changed default namespaces from `tests\codeception` to `tests`
+- Changed data files naming to using underscore by default
+
 ## 1.1.3
 
 - Refactored tests
