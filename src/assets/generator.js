@@ -21,4 +21,8 @@
             }
         }
     });
+    // hide amount of records when grabdata is disabled
+    $('form #generator-grabdata').change(function () {
+        $('form .field-generator-grabdataamount').toggle($(this).is(':checked'));
+    }).change();
 })(jQuery);

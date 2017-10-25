@@ -21,6 +21,7 @@ class Generator extends \yii\gii\Generator
     public $dataFile;
     public $dataPath = '@tests/fixtures/data';
     public $grabData = false;
+	public $grabDataAmount = '';
 
     /**
      * @inheritdoc
@@ -72,6 +73,7 @@ class Generator extends \yii\gii\Generator
             [['dataPath'], 'match', 'pattern' => '/^@?\w+[\\-\\/\w]*$/', 'message' => 'Only word characters, dashes, slashes and @ are allowed.'],
             [['dataPath'], 'validatePath'],
             [['grabData'], 'boolean'],
+	        [['grabDataAmount'], 'integer', 'min' => 0, 'skipOnEmpty' => true ],
         ]);
     }
 
@@ -87,6 +89,7 @@ class Generator extends \yii\gii\Generator
             'dataFile' => 'Fixture Data File',
             'dataPath' => 'Fixture Data Path',
             'grabData' => 'Grab Existing DB Data',
+            'grabDataAmount' => 'Amount of Records to Grab',
         ]);
     }
 
@@ -118,6 +121,7 @@ class Generator extends \yii\gii\Generator
             'dataFile' => 'This is the name for the generated fixture data file, e.g., <code>post.php</code>.',
             'dataPath' => 'This is the root path to keep the generated fixture data files. You may provide either a directory or a path alias, e.g., <code>@tests/fixtures/data</code>.',
             'grabData' => 'If checked, the existed data from database will be grabbed into data file.',
+            'grabDataAmount' => 'Specify the amount of records to grab from the database. Default is all records.',
         ]);
     }
 
@@ -191,7 +195,11 @@ EOD;
         $items = [];
         if ($this->grabData) {
             $orderBy = array_combine($modelClass::primaryKey(), array_fill(0, count($modelClass::primaryKey()), SORT_ASC));
-            foreach ($modelClass::find()->orderBy($orderBy)->asArray()->each() as $row) {
+            $query = $modelClass::find()->orderBy($orderBy)->asArray();
+            if ( ! empty($this->grabDataAmount) ) {
+            	$query->limit($this->grabDataAmount);
+	        }
+            foreach ($query->each() as $row) {
                 $item = [];
                 foreach ($row as $name => $value) {
                     if (is_null($value)) {

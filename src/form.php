@@ -21,3 +21,4 @@ echo $form->field($generator, 'fixtureNs');
 echo $form->field($generator, 'dataFile');
 echo $form->field($generator, 'dataPath');
 echo $form->field($generator, 'grabData')->checkbox();
+echo $form->field($generator, 'grabDataAmount');
