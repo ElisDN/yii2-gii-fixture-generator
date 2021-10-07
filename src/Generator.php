@@ -198,7 +198,7 @@ EOD;
             $orderBy = array_combine($modelClass::primaryKey(), array_fill(0, count($modelClass::primaryKey()), SORT_ASC));
 			$dataQ= $modelClass::find()->orderBy($orderBy)->asArray() ;
 			!isset($this->rowsData) ?: $dataQ = $dataQ->limit($this->rowsData);
-			$dataQ=  $dataQ ??  $dataQ->limit($this->rowsData) ;
+			
 			foreach ($dataQ->each() as $row) {
                 $item = [];
                 foreach ($row as $name => $value) {
