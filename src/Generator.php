@@ -21,6 +21,7 @@ class Generator extends \yii\gii\Generator
     public $dataFile;
     public $dataPath = '@tests/fixtures/data';
     public $grabData = false;
+	public $rowsData;
 
     /**
      * @inheritdoc
@@ -72,6 +73,8 @@ class Generator extends \yii\gii\Generator
             [['dataPath'], 'match', 'pattern' => '/^@?\w+[\\-\\/\w]*$/', 'message' => 'Only word characters, dashes, slashes and @ are allowed.'],
             [['dataPath'], 'validatePath'],
             [['grabData'], 'boolean'],
+			[['rowsData'], 'integer'],
+			[['rowsData'], 'default', 'value' => null],
         ]);
     }
 
@@ -87,6 +90,7 @@ class Generator extends \yii\gii\Generator
             'dataFile' => 'Fixture Data File',
             'dataPath' => 'Fixture Data Path',
             'grabData' => 'Grab Existing DB Data',
+			'rowsData' => 'Limit Grabbed rows of data from DB',
         ]);
     }
 
@@ -118,6 +122,7 @@ class Generator extends \yii\gii\Generator
             'dataFile' => 'This is the name for the generated fixture data file, e.g., <code>post.php</code>.',
             'dataPath' => 'This is the root path to keep the generated fixture data files. You may provide either a directory or a path alias, e.g., <code>@tests/fixtures/data</code>.',
             'grabData' => 'If checked, the existed data from database will be grabbed into data file.',
+			'rowsData' => 'If populated, the amount of rows grabbed will be limited to the specified value.',
         ]);
     }
 
@@ -191,7 +196,10 @@ EOD;
         $items = [];
         if ($this->grabData) {
             $orderBy = array_combine($modelClass::primaryKey(), array_fill(0, count($modelClass::primaryKey()), SORT_ASC));
-            foreach ($modelClass::find()->orderBy($orderBy)->asArray()->each() as $row) {
+			$dataQ= $modelClass::find()->orderBy($orderBy)->asArray() ;
+			!isset($this->rowsData) ?: $dataQ = $dataQ->limit($this->rowsData);
+			$dataQ=  $dataQ ??  $dataQ->limit($this->rowsData) ;
+			foreach ($dataQ->each() as $row) {
                 $item = [];
                 foreach ($row as $name => $value) {
                     if (is_null($value)) {
